@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Yotube next/previous chapter
 // @description  Creates hotkey to go to next/previous chapter in the video
-// @version      0.8
+// @version      0.9
 // @author      rustiX
 // @namespace    http://tampermonkey.net/
 // @match        http://www.youtube.com/watch?*
@@ -18,21 +18,24 @@
     let descTimesRegex = /(\d{1,}:){0,1}\d{1,}:\d\d/;
 
     function keyboardHandlerJQ (zEvent) {
-        var bBlockDefaultAction = false;
+        // If user is not writing comments
+        if (document.activeElement.id != 'contenteditable-root') {
+            var bBlockDefaultAction = false;
 
-        if (zEvent.key == 'n') {
-            let nextChapterUrl = DOMRegex(descTimesRegex, youtubeDescriptionCss, 'next');
-            window.open(nextChapterUrl,"_self");
-            bBlockDefaultAction = true;
-        } else if (zEvent.key == 'p') {
-            let previousChapterUrl = DOMRegex(descTimesRegex, youtubeDescriptionCss, 'prev');
-            window.open(previousChapterUrl,"_self");
-            bBlockDefaultAction = true;
-        }
+            if (zEvent.key == 'n') {
+                let nextChapterUrl = DOMRegex(descTimesRegex, youtubeDescriptionCss, 'next');
+                window.open(nextChapterUrl,"_self");
+                bBlockDefaultAction = true;
+            } else if (zEvent.key == 'p') {
+                let previousChapterUrl = DOMRegex(descTimesRegex, youtubeDescriptionCss, 'prev');
+                window.open(previousChapterUrl,"_self");
+                bBlockDefaultAction = true;
+            }
 
-        if (bBlockDefaultAction) {
-            zEvent.preventDefault ();
-            zEvent.stopPropagation ();
+            if (bBlockDefaultAction) {
+                zEvent.preventDefault ();
+                zEvent.stopPropagation ();
+            }
         }
     }
 
