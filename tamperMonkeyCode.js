@@ -18,8 +18,8 @@
     let descTimesRegex = /(\d{1,}:){0,1}\d{1,}:\d\d/;
 
     function keyboardHandlerJQ (zEvent) {
-        // If user is not writing comments
-        if (document.activeElement.id != 'contenteditable-root') {
+        // If user is not writing comments and not searching
+        if (document.activeElement.id != 'contenteditable-root' && document.activeElement.id != 'search') {
             var bBlockDefaultAction = false;
 
             if (zEvent.key == 'n') {
